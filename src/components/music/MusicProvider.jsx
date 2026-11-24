@@ -35,14 +35,21 @@ export default function MusicProvider({ children }) {
   }, [engine])
 
   const toggle = useCallback(() => {
-    const next = !playing
+    if (wanted && !playing) {
+      engine.start()
+      return
+    }
+    const next = !wanted
     setWanted(next)
     saveMusicOn(next)
     if (next) engine.start()
     else engine.stop()
-  }, [engine, playing])
+  }, [engine, wanted, playing])
 
-  const value = useMemo(() => ({ playing, supported: musicSupported, toggle }), [playing, toggle])
+  const value = useMemo(
+    () => ({ enabled: wanted, playing, supported: musicSupported, toggle }),
+    [wanted, playing, toggle],
+  )
 
   return <MusicContext.Provider value={value}>{children}</MusicContext.Provider>
 }

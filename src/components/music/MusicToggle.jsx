@@ -8,16 +8,17 @@ import './MusicToggle.css'
 const STRIKE = 'M5 5.4 C9.6 9.6 14.4 14.2 19.4 19'
 
 export default function MusicToggle({ className = '' }) {
-  const { playing, supported, toggle } = useMusic()
+  const { enabled, playing, supported, toggle } = useMusic()
   if (!supported) return null
+  const waiting = enabled && !playing
 
   return (
     <button
       type="button"
-      className={`music-toggle ${playing ? 'is-playing' : ''} ${className}`}
+      className={`music-toggle ${enabled ? 'is-on' : ''} ${playing ? 'is-playing' : ''} ${className}`}
       data-music-toggle
-      aria-pressed={playing}
-      aria-label={playing ? 'Mute the Christmas music' : 'Play Christmas music'}
+      aria-pressed={enabled}
+      aria-label={playing ? 'Mute the Christmas music' : waiting ? 'Start the Christmas music' : 'Play Christmas music'}
       title={playing ? 'Mute music' : 'Play music'}
       onClick={toggle}
     >
@@ -28,7 +29,7 @@ export default function MusicToggle({ className = '' }) {
       </span>
       <svg className="music-toggle__strike" viewBox="0 0 24 24" aria-hidden="true">
         <AnimatePresence>
-          {!playing && (
+          {!enabled && (
             <motion.path
               d={STRIKE}
               initial={{ pathLength: 0 }}

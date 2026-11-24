@@ -19,8 +19,12 @@
   transform: scale(0.94);
 }
 
-.music-toggle.is-playing {
+.music-toggle.is-on {
   color: var(--berry);
+}
+
+.music-toggle.is-on .music-toggle__icon {
+  animation: music-nudge 2.6s ease-in-out infinite;
 }
 
 .music-toggle__ring {
@@ -79,13 +83,20 @@
   50% { transform: rotate(9deg) translateY(-1.5px); }
 }
 
+@keyframes music-nudge {
+  0%, 70%, 100% { transform: rotate(0); }
+  78% { transform: rotate(-12deg) scale(1.08); }
+  86% { transform: rotate(10deg) scale(1.08); }
+  94% { transform: rotate(-4deg); }
+}
+
 @keyframes music-glow {
   0%, 100% { opacity: 0.55; }
   50% { opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .music-toggle.is-playing .music-toggle__icon,
+  .music-toggle.is-on .music-toggle__icon,
   .music-toggle.is-playing .music-toggle__glow {
     animation: none;
   }
