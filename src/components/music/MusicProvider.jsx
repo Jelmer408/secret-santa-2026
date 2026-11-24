@@ -15,6 +15,10 @@ export default function MusicProvider({ children }) {
   useEffect(() => () => engine.dispose(), [engine])
 
   useEffect(() => {
+    if (musicSupported && loadMusicOn()) engine.start()
+  }, [engine])
+
+  useEffect(() => {
     if (!musicSupported || !wanted || playing) return undefined
     const unlock = (event) => {
       if (event.target instanceof Element && event.target.closest('[data-music-toggle]')) return

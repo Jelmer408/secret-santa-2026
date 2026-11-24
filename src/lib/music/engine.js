@@ -2,6 +2,7 @@ import { MEDLEY } from './carols'
 import { arrange } from './arrange'
 import { flourish } from './flourish'
 import { playEvent } from './instruments'
+import { claimMediaChannel, releaseMediaChannel } from './mediaChannel'
 import { createMixer } from './mixer'
 import { createSequencer } from './sequencer'
 
@@ -42,9 +43,10 @@ export function createMusicEngine() {
     gain.linearRampToValueAtTime(value, now + seconds)
   }
 
-  // Browsers only let audio start inside a tap, click or key press, so call this from one.
+  // Browsers only let audio start inside a tap, click or key press; outside one it waits suspended.
   function start() {
     if (!AudioCtx) return
+    claimMediaChannel()
     setup()
     wanted = true
     clearTimeout(parkTimer)
@@ -67,6 +69,7 @@ export function createMusicEngine() {
     parkTimer = setTimeout(() => {
       sequencer.stop()
       ctx.suspend()
+      releaseMediaChannel()
     }, FADE_OUT * 1000 + 150)
   }
 
@@ -74,13 +77,18 @@ export function createMusicEngine() {
     start,
     stop,
     pause() {
-      if (ctx && wanted) ctx.suspend()
+      if (!ctx || !wanted) return
+      ctx.suspend()
+      releaseMediaChannel()
     },
     resume() {
-      if (ctx && wanted) ctx.resume().catch(() => {})
+      if (!ctx || !wanted) return
+      claimMediaChannel()
+      ctx.resume().catch(() => {})
     },
     dispose() {
       clearTimeout(parkTimer)
+      releaseMediaChannel()
       sequencer?.stop()
       ctx?.close()
       ctx = mixer = sequencer = null

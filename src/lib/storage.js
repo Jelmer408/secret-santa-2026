@@ -13,8 +13,8 @@ export const loadAccessCode = () => localStorage.getItem(codeKey)
 export const saveAccessCode = (code) => localStorage.setItem(codeKey, code)
 export const clearAccessCode = () => localStorage.removeItem(codeKey)
 
-export const loadMusicOn = () => localStorage.getItem(musicKey) !== 'off'
-export const saveMusicOn = (on) => localStorage.setItem(musicKey, on ? 'on' : 'off')
+export const loadMusicOn = () => sessionStorage.getItem(musicKey) !== 'off'
+export const saveMusicOn = (on) => sessionStorage.setItem(musicKey, on ? 'on' : 'off')
 
 export const hasRevealed = (memberId, drawnAt) => localStorage.getItem(revealKey(memberId, drawnAt)) === '1'
 export const markRevealed = (memberId, drawnAt) => localStorage.setItem(revealKey(memberId, drawnAt), '1')
