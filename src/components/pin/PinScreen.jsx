@@ -39,8 +39,8 @@ export default function PinScreen({ member, onBack, onSignedIn }) {
     }
     setBusy(true)
     try {
-      const { token } = await api.login(member.id, pin)
-      onSignedIn(token)
+      const { token, created } = await api.login(member.id, pin)
+      onSignedIn(token, created)
     } catch (err) {
       fail(pinErrorMessage(err))
       setBusy(false)

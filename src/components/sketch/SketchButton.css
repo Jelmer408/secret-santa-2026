@@ -1,7 +1,8 @@
 .sketch-button {
   display: inline-flex;
-  font-family: var(--font-display);
-  letter-spacing: 0.02em;
+  font-family: var(--font-body);
+  font-weight: 800;
+  letter-spacing: 0.01em;
   line-height: 1;
   transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
   -webkit-tap-highlight-color: transparent;
@@ -16,18 +17,24 @@
 }
 
 .sketch-button--md {
-  padding: 0.75rem 1.5rem 0.85rem;
-  font-size: 1.45rem;
+  padding: 0.8rem 1.4rem;
+  font-size: var(--text-md);
 }
 
 .sketch-button--sm {
-  padding: 0.45rem 0.9rem 0.55rem;
-  font-size: 1.15rem;
+  padding: 0.55rem 0.95rem;
+  font-size: var(--text-sm);
 }
 
 .sketch-button--lg {
-  padding: 1rem 2.2rem 1.1rem;
-  font-size: 1.9rem;
+  padding: 1rem 1.9rem;
+  font-size: 1.15rem;
+}
+
+.sketch-button .icon {
+  flex: none;
+  width: 1.25em;
+  height: 1.25em;
 }
 
 .sketch-button--primary,

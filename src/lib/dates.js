@@ -20,6 +20,14 @@ export function sleepsLabel(sleeps) {
   return 'hope you loved your gift'
 }
 
+export function sleepsShort(sleeps) {
+  if (sleeps === null) return 'TBC'
+  if (sleeps > 1) return `${sleeps} sleeps`
+  if (sleeps === 1) return '1 sleep'
+  if (sleeps === 0) return 'Today!'
+  return 'Done'
+}
+
 export function formatSwapDate(isoDate) {
   if (!isoDate) return 'date TBC'
   return new Intl.DateTimeFormat('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })

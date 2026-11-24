@@ -15,6 +15,20 @@
   padding: 5.5rem 0 15rem;
 }
 
+.app--shell .garland {
+  top: calc(var(--topbar-h) - 2px);
+}
+
+.app--shell .sleigh {
+  top: 58vh;
+}
+
+@media (max-width: 859px) {
+  .app--shell .app__footer {
+    bottom: calc(var(--bottomnav-h) + env(safe-area-inset-bottom) + 0.6rem);
+  }
+}
+
 .app__footer {
   position: absolute;
   left: 0;

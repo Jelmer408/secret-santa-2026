@@ -42,8 +42,8 @@ export default function WishEditor({ token, wishes, onChange }) {
   return (
     <NotebookPage
       className="wish-editor"
-      title="My wishlist"
-      subtitle={wishes.length ? `${wishes.length}/${MAX_WISHES} wishes` : 'Help your Santa out. They’re nervous.'}
+      title="Dear Santa, I’d love…"
+      subtitle={wishes.length ? `${wishes.length} of ${MAX_WISHES} wishes` : 'Start with one idea. You can add more any time.'}
     >
       <ul className="wish-editor__list">
         <AnimatePresence initial={false}>
@@ -60,7 +60,7 @@ export default function WishEditor({ token, wishes, onChange }) {
       </ul>
 
       {wishes.length < MAX_WISHES
-        ? <WishForm onAdd={add} busy={adding} />
+        ? <WishForm onAdd={add} busy={adding} taken={wishes.map((wish) => wish.body)} />
         : <p className="notebook__empty">That’s a full sleigh! Remove one to add another.</p>}
     </NotebookPage>
   )

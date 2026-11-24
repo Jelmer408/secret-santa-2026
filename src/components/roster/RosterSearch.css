@@ -1,0 +1,65 @@
+.roster-search {
+  width: min(380px, 100%);
+  margin: 0 auto;
+  transition: transform 0.25s var(--ease-spring);
+}
+
+.roster-search > .sketch-box__content {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 0.8rem 0.55rem 0.9rem;
+}
+
+.roster-search__icon {
+  color: var(--ink-soft);
+}
+
+.roster-search__input {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--text-lg);
+  font-weight: 600;
+  background: transparent;
+  border: 0;
+  outline: none;
+  caret-color: var(--berry);
+}
+
+.roster-search__input:focus-visible {
+  outline: none;
+}
+
+.roster-search:focus-within {
+  transform: rotate(-0.4deg) scale(1.01);
+}
+
+.roster-search__input::placeholder {
+  color: var(--ink-faint);
+}
+
+.roster-search__input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.roster-search__hint {
+  flex: none;
+  font-family: var(--font-hand);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--pine);
+}
+
+.roster-search__clear {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  color: var(--ink-soft);
+  border-radius: 50%;
+}
+
+.roster-search__clear:hover {
+  color: var(--ink);
+  background: var(--paper-deep);
+}

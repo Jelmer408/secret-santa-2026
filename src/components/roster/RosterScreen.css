@@ -24,6 +24,29 @@
   margin-top: 0.8rem;
 }
 
+.roster__welcome {
+  max-width: 46ch;
+  margin: -0.8rem auto 0;
+  text-align: center;
+  color: var(--ink-soft);
+}
+
+.roster__welcome > span {
+  display: block;
+}
+
+.roster__welcome strong {
+  color: var(--ink);
+}
+
+.roster__none {
+  font-family: var(--font-hand);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--ink-soft);
+}
+
 .roster__grid {
   display: flex;
   flex-wrap: wrap;
@@ -38,6 +61,10 @@
 }
 
 @media (max-width: 520px) {
+  .roster__welcome {
+    font-size: var(--text-sm);
+  }
+
   .roster__hint {
     font-size: 1.6rem;
   }
