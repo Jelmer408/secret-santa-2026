@@ -1,0 +1,19 @@
+.joined-meter {
+  display: grid;
+  gap: 0.5rem;
+  width: min(380px, 100%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.joined-meter__label {
+  font-size: 1.2rem;
+  color: var(--ink-soft);
+}
+
+.joined-meter__label strong {
+  color: var(--ink);
+  font-weight: 400;
+  text-decoration: underline wavy var(--gold) 2px;
+  text-underline-offset: 4px;
+}

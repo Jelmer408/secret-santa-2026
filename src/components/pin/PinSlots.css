@@ -1,0 +1,42 @@
+.pin-slots {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.pin-slots__slot {
+  position: relative;
+  width: 46px;
+  height: 46px;
+}
+
+.pin-slots__slot > svg:first-child {
+  position: absolute;
+  inset: 0;
+}
+
+.pin-slots__blob {
+  position: absolute;
+  inset: 9px;
+  overflow: visible;
+}
+
+.pin-slots__slot--active::after {
+  content: '';
+  position: absolute;
+  left: 30%;
+  right: 30%;
+  bottom: -9px;
+  height: 3px;
+  background: var(--berry);
+  border-radius: 3px;
+  animation: caret-blink 1s steps(1) infinite;
+}
+
+.pin-slots--error .pin-slots__blob path {
+  stroke: var(--berry);
+}
+
+@keyframes caret-blink {
+  50% { opacity: 0; }
+}

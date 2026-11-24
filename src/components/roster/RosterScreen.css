@@ -1,0 +1,57 @@
+.roster {
+  display: grid;
+  gap: 1.6rem;
+}
+
+.roster__prompt {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0.3rem;
+  margin-top: 0.6rem;
+}
+
+.roster__hint {
+  font-family: var(--font-hand);
+  font-size: 2rem;
+  font-weight: 700;
+  transform: rotate(-2deg);
+}
+
+.roster__arrow {
+  width: 52px;
+  height: 58px;
+  margin-top: 0.8rem;
+}
+
+.roster__grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2.6rem 2rem;
+  padding: 1.4rem 0.4rem 0;
+  list-style: none;
+}
+
+.roster__grid > li {
+  width: 186px;
+}
+
+@media (max-width: 520px) {
+  .roster__hint {
+    font-size: 1.6rem;
+  }
+
+  .roster__arrow {
+    width: 40px;
+    height: 46px;
+  }
+
+  .roster__grid {
+    gap: 1.8rem 1.1rem;
+  }
+
+  .roster__grid > li {
+    width: calc(50% - 0.6rem);
+  }
+}

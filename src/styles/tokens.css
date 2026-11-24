@@ -1,0 +1,27 @@
+:root {
+  --paper: #fbf5e9;
+  --paper-deep: #f1e5cb;
+  --card: #fffdf7;
+  --ink: #2b2733;
+  --ink-soft: #625b6e;
+  --ink-faint: #a49cad;
+
+  --berry: #cf4b3f;
+  --berry-deep: #a3352d;
+  --pine: #2f6e50;
+  --pine-soft: #7fb08f;
+  --gold: #e9b347;
+  --gold-soft: #f6d98c;
+  --sky: #cfe1ea;
+  --ice: #7fb3d5;
+  --snow-shadow: #b8cfdb;
+  --bark: #8a5b3c;
+  --skin: #f3d3b5;
+
+  --font-display: 'Caveat Brush', 'Caveat', cursive;
+  --font-hand: 'Caveat', cursive;
+  --font-body: 'Patrick Hand', 'Comic Sans MS', system-ui, sans-serif;
+
+  --wobbly-radius: 18px 8px 22px 6px / 8px 20px 6px 18px;
+  --page-width: 1120px;
+}
