@@ -1,7 +1,7 @@
 .toasts {
   position: fixed;
   left: 50%;
-  bottom: 1.5rem;
+  bottom: calc(1.5rem + env(safe-area-inset-bottom));
   z-index: 50;
   display: grid;
   justify-items: center;

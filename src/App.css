@@ -13,7 +13,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  width: min(var(--page-width), 100% - 2rem);
+  width: min(var(--page-width), 100% - 2rem - var(--safe-x));
   margin: 0 auto;
   padding: var(--stage-top) 0 var(--stage-bottom);
 }
@@ -27,12 +27,12 @@
 }
 
 .app__main--roster {
-  width: min(1400px, 100% - 2rem);
+  width: min(1400px, 100% - 2rem - var(--safe-x));
 }
 
 @media (max-height: 620px) {
   .app:not(.app--shell) {
-    --stage-bottom: 1rem;
+    --stage-bottom: calc(1rem + env(safe-area-inset-bottom));
   }
 
   .app:not(.app--shell) .app__footer {

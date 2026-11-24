@@ -13,7 +13,7 @@
     grid-auto-flow: column;
     grid-auto-columns: 1fr;
     height: calc(var(--bottomnav-h) + env(safe-area-inset-bottom));
-    padding: 0.3rem 0.4rem env(safe-area-inset-bottom);
+    padding: 0.3rem max(0.4rem, env(safe-area-inset-right)) env(safe-area-inset-bottom) max(0.4rem, env(safe-area-inset-left));
     background: rgba(255, 253, 247, 0.94);
     backdrop-filter: blur(10px) saturate(1.2);
   }
