@@ -30,6 +30,16 @@
   width: min(1400px, 100% - 2rem - var(--safe-x));
 }
 
+@media (max-height: 760px) {
+  .app__main--pin {
+    --stage-bottom: calc(1rem + env(safe-area-inset-bottom));
+  }
+
+  .app__main--pin + .app__footer {
+    display: none;
+  }
+}
+
 @media (max-height: 620px) {
   .app:not(.app--shell) {
     --stage-bottom: calc(1rem + env(safe-area-inset-bottom));
@@ -58,7 +68,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0.8rem;
+  bottom: calc(0.8rem + env(safe-area-inset-bottom));
   z-index: 2;
   font-family: var(--font-hand);
   font-size: 1.15rem;

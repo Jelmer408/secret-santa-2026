@@ -42,7 +42,7 @@
   --topbar-h: 72px;
   --bottomnav-h: 68px;
   --stage-top: clamp(3.6rem, 9dvh, 5.5rem);
-  --stage-bottom: calc(clamp(2.7rem, 7dvh, 5rem) + env(safe-area-inset-bottom));
+  --stage-bottom: max(clamp(2.7rem, 7dvh, 5rem), calc(env(safe-area-inset-bottom) + 2.6rem));
   --safe-x: calc(env(safe-area-inset-left) + env(safe-area-inset-right));
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
