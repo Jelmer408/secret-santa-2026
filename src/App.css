@@ -27,7 +27,7 @@
 }
 
 .app__main--roster {
-  width: min(1400px, 100% - 2rem - var(--safe-x));
+  width: min(1600px, 100% - 2rem - var(--safe-x));
 }
 
 @media (max-height: 760px) {

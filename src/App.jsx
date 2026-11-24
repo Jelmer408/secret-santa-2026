@@ -56,7 +56,7 @@ export default function App() {
       <ConfirmProvider>
         <SketchFilters />
         <div className={`app ${screen === 'home' ? 'app--shell' : ''}`}>
-          <Scene />
+          <Scene quiet={screen === 'roster'} />
           {screen === 'home' ? (
             <AppShell
               session={session}

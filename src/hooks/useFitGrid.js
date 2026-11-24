@@ -11,7 +11,7 @@ function pageTop(element) {
 }
 
 export function useFitGrid(ref, { count, min, max, cardHeight }) {
-  const [size, setSize] = useState(max)
+  const [layout, setLayout] = useState({ size: max, cols: count })
 
   useLayoutEffect(() => {
     const element = ref.current
@@ -20,7 +20,7 @@ export function useFitGrid(ref, { count, min, max, cardHeight }) {
       const style = getComputedStyle(element)
       const stage = element.closest('main')
       const reserve = stage ? px(getComputedStyle(stage).paddingBottom) : 0
-      setSize(fitGrid({
+      const next = fitGrid({
         count,
         min,
         max,
@@ -29,7 +29,8 @@ export function useFitGrid(ref, { count, min, max, cardHeight }) {
         height: window.innerHeight - pageTop(element) - px(style.paddingTop) - reserve,
         gapX: px(style.columnGap),
         gapY: px(style.rowGap),
-      }))
+      })
+      setLayout((prev) => (prev.size === next.size && prev.cols === next.cols ? prev : next))
     }
     measure()
     const observer = new ResizeObserver(measure)
@@ -42,5 +43,5 @@ export function useFitGrid(ref, { count, min, max, cardHeight }) {
     }
   }, [ref, count, min, max, cardHeight])
 
-  return size
+  return layout
 }

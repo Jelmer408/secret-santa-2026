@@ -1,132 +1,23 @@
 .roster {
   display: grid;
-  gap: clamp(0.9rem, 2.6dvh, 1.6rem);
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.4rem, 3.5dvh, 2.4rem);
 }
 
-.roster__intro {
-  display: grid;
-  gap: clamp(0.8rem, 2.4dvh, 1.6rem);
-}
-
-.roster__prompt {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 0.3rem;
-  margin-top: clamp(0rem, 1dvh, 0.6rem);
-}
-
-.roster__hint {
-  font-family: var(--font-hand);
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 1.25;
-  transform: rotate(-2deg);
-}
-
-.roster__arrow {
-  width: 52px;
-  height: 58px;
-  margin-top: 0.8rem;
-}
-
-.roster__welcome {
-  max-width: 46ch;
-  margin: -0.8rem auto 0;
-  text-align: center;
-  color: var(--ink-soft);
-}
-
-.roster__welcome > span {
-  display: block;
-}
-
-.roster__welcome strong {
-  color: var(--ink);
-}
-
-.roster__none {
-  font-family: var(--font-hand);
-  font-size: 1.5rem;
-  font-weight: 700;
-  text-align: center;
-  color: var(--ink-soft);
-}
-
-.roster__grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: clamp(1.4rem, 3dvh, 2.4rem) clamp(0.9rem, 1.6vw, 1.6rem);
-  padding: 1rem 0 0;
-  list-style: none;
-}
-
-.roster__grid > li {
-  width: var(--face);
-}
-
-.roster__grid .polaroid__name {
-  min-height: calc(var(--face-name) * 2.04 + 1rem);
-  font-size: var(--face-name);
-}
-
-.roster__grid .joined-stamp {
-  scale: var(--face-stamp);
+@media (max-width: 999px) {
+  .roster {
+    padding-bottom: clamp(0.6rem, 3dvh, 1.6rem);
+  }
 }
 
 @media (min-width: 1000px) {
   .roster {
-    grid-template-columns: clamp(320px, 27vw, 420px) 1fr;
+    grid-template-columns: clamp(300px, 27vw, 440px) minmax(0, 1fr);
     align-items: start;
     column-gap: clamp(1.5rem, 3.5vw, 3.5rem);
   }
 
-  .roster__intro {
+  .roster > .roster-intro {
     align-self: center;
-  }
-
-  .roster__intro .title-block__side {
-    display: none;
-  }
-
-  .roster__intro .title-block__title {
-    font-size: clamp(3rem, min(4.3vw, 9.5dvh), 5.4rem);
-  }
-
-  .roster__intro .event-facts {
-    gap: 0.5rem 0.6rem;
-  }
-
-  .roster__intro .event-facts__item {
-    padding: 0.2rem 0.7rem 0.25rem 0.5rem;
-    font-size: 0.98rem;
-  }
-
-  .roster__hint {
-    font-size: clamp(1.5rem, 2vw, 2rem);
-  }
-
-  .roster__welcome {
-    font-size: var(--text-sm);
-  }
-}
-
-@media (max-width: 520px) {
-  .roster__intro {
-    gap: clamp(0.6rem, 1.8dvh, 1rem);
-  }
-
-  .roster__welcome {
-    font-size: var(--text-sm);
-  }
-
-  .roster__hint {
-    font-size: 1.6rem;
-  }
-
-  .roster__arrow {
-    width: 40px;
-    height: 46px;
   }
 }
