@@ -3,7 +3,6 @@ import HandLettering from '../sketch/HandLettering'
 import Scribble from '../doodles/Scribble'
 import Sparkle from '../doodles/Sparkle'
 import MiniBauble from '../doodles/MiniBauble'
-import RosterSearch from './RosterSearch'
 import RosterStatus from './RosterStatus'
 import { formatSwapDate, sleepsLabel, sleepsUntil } from '../../lib/dates'
 import './RosterIntro.css'
@@ -14,7 +13,7 @@ const rise = (delay) => ({
   transition: { delay, type: 'spring', stiffness: 260, damping: 22 },
 })
 
-export default function RosterIntro({ event, lit, total, query, onQuery, matches, onSubmit }) {
+export default function RosterIntro({ event, lit, total }) {
   const facts = [
     `${event.budget} budget`,
     formatSwapDate(event.exchange_date),
@@ -52,13 +51,9 @@ export default function RosterIntro({ event, lit, total, query, onQuery, matches
         <p className="roster-intro__help">Tap your bauble to sign in. New here? Pick a 4-digit PIN to light it up.</p>
       </motion.div>
 
-      <motion.div className="roster-intro__search" {...rise(1.35)}>
-        <RosterSearch value={query} onChange={onQuery} matches={matches} onSubmit={onSubmit} />
-      </motion.div>
-
-      <motion.p className="roster-intro__status" aria-live="polite" {...rise(1.5)}>
+      <motion.p className="roster-intro__status" {...rise(1.35)}>
         <MiniBauble className="roster-intro__bauble" />
-        <span><RosterStatus event={event} lit={lit} total={total} query={query} matches={matches} /></span>
+        <span><RosterStatus event={event} lit={lit} total={total} /></span>
       </motion.p>
     </header>
   )

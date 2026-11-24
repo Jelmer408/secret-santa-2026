@@ -194,17 +194,8 @@
   border-radius: 50%;
 }
 
-.bauble.is-faded {
-  opacity: 0.18;
-  filter: grayscale(1);
-}
-
 .bauble.is-dimmed {
   opacity: 0.3;
-}
-
-.bauble.is-match .bauble__ball {
-  animation: bauble-bob 1.4s ease-in-out infinite;
 }
 
 .bauble.is-picked .bauble__ball {
@@ -234,11 +225,6 @@
 @keyframes bauble-glint {
   0%, 86%, 100% { opacity: 0.75; stroke-width: 4.5; }
   91% { opacity: 1; stroke-width: 7; }
-}
-
-@keyframes bauble-bob {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 -6px; }
 }
 
 @keyframes bauble-pop {

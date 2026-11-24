@@ -85,15 +85,6 @@
   color: var(--ink-soft);
 }
 
-.roster-intro__search {
-  width: min(340px, 100%);
-  margin-top: clamp(0.8rem, 2.4dvh, 1.3rem);
-}
-
-.roster-intro__search .roster-search {
-  width: 100%;
-}
-
 .roster-intro__status {
   display: flex;
   align-items: center;
