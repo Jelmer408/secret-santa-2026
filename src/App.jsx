@@ -67,12 +67,12 @@ export default function App() {
               onOnboarded={handleOnboarded}
             />
           ) : (
-            <main className="app__main">
+            <main className={`app__main app__main--${screen}`}>
               <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
                 {screen === 'loading' && <Screen key="loading"><Loader /></Screen>}
                 {screen === 'gate' && <Screen key="gate"><AccessGate onUnlocked={reload} /></Screen>}
                 {screen === 'error' && <Screen key="error"><ErrorNote error={rosterError} onRetry={reload} /></Screen>}
-                {screen === 'roster' && <Screen key="roster"><RosterScreen roster={roster} onPick={setPicked} /></Screen>}
+                {screen === 'roster' && <Screen key="roster" className="screen--top"><RosterScreen roster={roster} onPick={setPicked} /></Screen>}
                 {screen === 'pin' && (
                   <Screen key="pin">
                     <PinScreen member={picked} onBack={handleBack} onSignedIn={handleSignedIn} />

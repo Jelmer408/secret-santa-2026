@@ -75,9 +75,8 @@ export default function PinScreen({ member, onBack, onSignedIn }) {
 
   return (
     <section className="pin-screen">
-      <button className="link-button pin-screen__back" onClick={onBack}>← not me</button>
-
       <div ref={cardRef} className="pin-screen__card-wrap">
+        <button className="link-button pin-screen__back" onClick={onBack}>← not me</button>
         <div className="pin-screen__photo">
           <Polaroid member={member} size="sm" initial="hidden" animate="show" />
         </div>

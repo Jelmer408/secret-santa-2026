@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.6rem 1.1rem;
-  margin-top: 1.1rem;
+  margin-top: clamp(0.5rem, 1.6dvh, 1.1rem);
   list-style: none;
 }
 
@@ -22,4 +22,21 @@
 .event-facts__sparkle {
   width: 18px;
   height: 18px;
+}
+
+@media (max-width: 520px) {
+  .event-facts {
+    gap: 0.5rem 0.6rem;
+  }
+
+  .event-facts__item {
+    gap: 0.3rem;
+    padding: 0.2rem 0.7rem 0.25rem 0.5rem;
+    font-size: 0.98rem;
+  }
+
+  .event-facts__sparkle {
+    width: 15px;
+    height: 15px;
+  }
 }
