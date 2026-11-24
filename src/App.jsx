@@ -7,6 +7,7 @@ import Loader from './components/common/Loader'
 import ErrorNote from './components/common/ErrorNote'
 import ToastProvider from './components/common/ToastProvider'
 import ConfirmProvider from './components/common/ConfirmProvider'
+import MusicToggle from './components/music/MusicToggle'
 import RosterScreen from './components/roster/RosterScreen'
 import PinScreen from './components/pin/PinScreen'
 import AppShell from './components/shell/AppShell'
@@ -57,6 +58,7 @@ export default function App() {
         <SketchFilters />
         <div className={`app ${screen === 'home' ? 'app--shell' : ''}`}>
           <Scene quiet={screen === 'roster'} />
+          {screen !== 'home' && <MusicToggle className="music-toggle--floating" />}
           {screen === 'home' ? (
             <AppShell
               session={session}

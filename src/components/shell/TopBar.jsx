@@ -3,6 +3,7 @@ import Brand from './Brand'
 import TabNav from './TabNav'
 import SleepsChip from './SleepsChip'
 import UserMenu from './UserMenu'
+import MusicToggle from '../music/MusicToggle'
 import './TopBar.css'
 
 export default function TopBar({ tabs, active, badges, me, event, onSignOut }) {
@@ -17,6 +18,7 @@ export default function TopBar({ tabs, active, badges, me, event, onSignOut }) {
         <Brand />
         <TabNav tabs={tabs} active={active} badges={badges} />
         <div className="topbar__end">
+          <MusicToggle />
           <SleepsChip date={event.exchange_date} />
           <UserMenu me={me} onSignOut={onSignOut} />
         </div>

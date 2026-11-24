@@ -46,3 +46,9 @@
     display: none;
   }
 }
+
+@media (max-width: 370px) {
+  .brand__name {
+    font-size: 1.25rem;
+  }
+}

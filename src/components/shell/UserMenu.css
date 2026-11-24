@@ -51,6 +51,12 @@
   color: var(--ink-soft);
 }
 
+@media (max-width: 540px) {
+  .user-menu__chevron {
+    display: none;
+  }
+}
+
 .user-menu__panel {
   position: absolute;
   top: calc(100% + 12px);
