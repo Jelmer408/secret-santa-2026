@@ -15,6 +15,7 @@
     grid-template-columns: clamp(300px, 27vw, 440px) minmax(0, 1fr);
     align-items: start;
     column-gap: clamp(1.5rem, 3.5vw, 3.5rem);
+    padding-left: clamp(1rem, 3.5vw, 4.5rem);
   }
 
   .roster > .roster-intro {

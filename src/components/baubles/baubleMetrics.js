@@ -7,7 +7,7 @@ const CAP_OVERLAP = 0.05
 const BALL = 0.84
 const NAME_GAP = 6
 
-export const BAUBLE_MIN = 80
+export const BAUBLE_MIN = 72
 export const BAUBLE_MAX = 150
 
 const nameSize = (cell) => Math.min(21, Math.max(15, cell * 0.14))
