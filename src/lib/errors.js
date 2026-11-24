@@ -15,6 +15,9 @@ const MESSAGES = {
   unknown_member: "That person isn't on the list anymore.",
   wrong_pin: 'Wrong PIN.',
   locked: 'Too many tries.',
+  code_required: 'Enter the team code to come in.',
+  bad_access_code: 'That’s not the magic word. Check the code with your head elf.',
+  invalid_code: 'Team codes need 4 to 40 characters.',
 }
 
 export class SantaError extends Error {

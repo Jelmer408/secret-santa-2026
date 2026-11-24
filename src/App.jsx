@@ -10,12 +10,15 @@ import ConfirmProvider from './components/common/ConfirmProvider'
 import RosterScreen from './components/roster/RosterScreen'
 import PinScreen from './components/pin/PinScreen'
 import AppShell from './components/shell/AppShell'
+import AccessGate from './components/gate/AccessGate'
 import { useRoster } from './hooks/useRoster'
 import { useSession } from './hooks/useSession'
+import { isCodeError } from './lib/accessCode'
 import { EVENT_SLUG } from './config'
 import './App.css'
 
 function pickScreen({ session, roster, rosterError, picked }) {
+  if (isCodeError(rosterError)) return 'gate'
   if (session.data) return 'home'
   if (session.loading) return 'loading'
   if (picked) return 'pin'
@@ -67,6 +70,7 @@ export default function App() {
             <main className="app__main">
               <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
                 {screen === 'loading' && <Screen key="loading"><Loader /></Screen>}
+                {screen === 'gate' && <Screen key="gate"><AccessGate onUnlocked={reload} /></Screen>}
                 {screen === 'error' && <Screen key="error"><ErrorNote error={rosterError} onRetry={reload} /></Screen>}
                 {screen === 'roster' && <Screen key="roster"><RosterScreen roster={roster} onPick={setPicked} /></Screen>}
                 {screen === 'pin' && (

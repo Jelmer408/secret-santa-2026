@@ -1,5 +1,6 @@
 import { supabase } from './supabase'
 import { SantaError, toSantaError } from './errors'
+import { loadAccessCode } from './storage'
 
 async function call(fn, args) {
   const { data, error } = await supabase.rpc(fn, args)
@@ -8,10 +9,10 @@ async function call(fn, args) {
 }
 
 export const api = {
-  roster: (slug) => call('santa_roster', { p_slug: slug }),
+  roster: (slug, code = loadAccessCode()) => call('santa_roster', { p_slug: slug, p_code: code || null }),
 
-  async login(memberId, pin) {
-    const result = await call('santa_login', { p_member_id: memberId, p_pin: pin })
+  async login(memberId, pin, code = loadAccessCode()) {
+    const result = await call('santa_login', { p_member_id: memberId, p_pin: pin, p_code: code || null })
     if (!result.ok) {
       throw new SantaError(result.error, { attemptsLeft: result.attempts_left, retryIn: result.retry_in })
     }
@@ -36,6 +37,8 @@ export const adminApi = {
       p_budget: budget,
       p_exchange_date: exchangeDate || null,
     }),
+
+  setAccessCode: (token, code) => call('santa_admin_set_access_code', { p_token: token, p_code: code }),
 
   addMember: (token, name, avatarUrl) =>
     call('santa_admin_add_member', { p_token: token, p_name: name, p_avatar_url: avatarUrl || null }),

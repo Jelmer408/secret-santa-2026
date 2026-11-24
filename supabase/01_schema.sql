@@ -15,8 +15,11 @@ create table if not exists public.santa_events (
   budget        text not null default '€20',
   exchange_date date,
   drawn_at      timestamptz,
+  access_code   text,
   created_at    timestamptz not null default now()
 );
+
+alter table public.santa_events add column if not exists access_code text;
 
 create table if not exists public.santa_members (
   id              uuid primary key default gen_random_uuid(),
@@ -144,36 +147,59 @@ as $$
   )
 $$;
 
+-- The team code gates the roster and login. No code set means the app is open. Case and spacing don't matter.
+create or replace function public.santa_code_error(p_event_id uuid, p_code text)
+returns text
+language sql stable security definer set search_path = public
+as $$
+  select case
+    when e.access_code is null then null
+    when nullif(btrim(coalesce(p_code, '')), '') is null then 'code_required'
+    when lower(btrim(p_code)) <> lower(e.access_code) then 'bad_access_code'
+  end
+  from public.santa_events e
+  where e.id = p_event_id
+$$;
+
 revoke execute on function
   public.santa_session_member(uuid),
   public.santa_admin_member(uuid),
   public.santa_event_json(uuid),
   public.santa_wishes_json(uuid),
-  public.santa_roster_json(uuid)
+  public.santa_roster_json(uuid),
+  public.santa_code_error(uuid, text)
 from public, anon, authenticated;
 
 -- ─────────────────────────────────────────────────────────────
 -- Public API
 -- ─────────────────────────────────────────────────────────────
 
+drop function if exists public.santa_roster(text);
+drop function if exists public.santa_login(uuid, text);
+
 -- Roster for the "who are you?" screen. No PINs, no matches.
-create or replace function public.santa_roster(p_slug text)
+create or replace function public.santa_roster(p_slug text, p_code text default null)
 returns jsonb
 language plpgsql stable security definer set search_path = public
 as $$
 declare
   v_event_id uuid;
+  v_error    text;
 begin
   select id into v_event_id from public.santa_events where slug = p_slug;
   if v_event_id is null then
     raise exception 'event_not_found';
+  end if;
+  v_error := public.santa_code_error(v_event_id, p_code);
+  if v_error is not null then
+    raise exception '%', v_error;
   end if;
   return public.santa_roster_json(v_event_id);
 end $$;
 
 -- First visit sets the PIN, later visits check it. Five misses lock the member for two minutes.
 -- Returns {ok:false,...} instead of raising so the miss counter is not rolled back.
-create or replace function public.santa_login(p_member_id uuid, p_pin text)
+create or replace function public.santa_login(p_member_id uuid, p_pin text, p_code text default null)
 returns jsonb
 language plpgsql volatile security definer set search_path = public, extensions
 as $$
@@ -181,6 +207,7 @@ declare
   m        public.santa_members;
   v_misses int;
   v_token  uuid;
+  v_error  text;
 begin
   if p_pin is null or p_pin !~ '^\d{4}$' then
     return jsonb_build_object('ok', false, 'error', 'invalid_pin');
@@ -189,6 +216,11 @@ begin
   select * into m from public.santa_members where id = p_member_id for update;
   if not found then
     return jsonb_build_object('ok', false, 'error', 'unknown_member');
+  end if;
+
+  v_error := public.santa_code_error(m.event_id, p_code);
+  if v_error is not null then
+    return jsonb_build_object('ok', false, 'error', v_error);
   end if;
 
   if m.locked_until > now() then
@@ -241,6 +273,7 @@ begin
   return jsonb_build_object(
     'me', jsonb_build_object('id', m.id, 'name', m.name, 'avatar_url', m.avatar_url, 'is_admin', m.is_admin),
     'event', public.santa_event_json(m.event_id),
+    'access_code', case when m.is_admin then (select e.access_code from public.santa_events e where e.id = m.event_id) end,
     'wishes', public.santa_wishes_json(m.id),
     'target', case when t.id is null then null else jsonb_build_object(
       'id', t.id,
@@ -308,6 +341,23 @@ begin
          exchange_date = p_exchange_date
    where id = m.event_id;
   return public.santa_roster_json(m.event_id);
+end $$;
+
+-- An empty code opens the app to anyone with the link.
+create or replace function public.santa_admin_set_access_code(p_token uuid, p_code text)
+returns jsonb
+language plpgsql volatile security definer set search_path = public
+as $$
+declare
+  m      public.santa_members;
+  v_code text := nullif(btrim(coalesce(p_code, '')), '');
+begin
+  m := public.santa_admin_member(p_token);
+  if v_code is not null and char_length(v_code) not between 4 and 40 then
+    raise exception 'invalid_code';
+  end if;
+  update public.santa_events set access_code = v_code where id = m.event_id;
+  return jsonb_build_object('access_code', v_code);
 end $$;
 
 create or replace function public.santa_admin_add_member(p_token uuid, p_name text, p_avatar_url text default null)
@@ -415,13 +465,14 @@ begin
 end $$;
 
 grant execute on function
-  public.santa_roster(text),
-  public.santa_login(uuid, text),
+  public.santa_roster(text, text),
+  public.santa_login(uuid, text, text),
   public.santa_logout(uuid),
   public.santa_me(uuid),
   public.santa_add_wish(uuid, text, text),
   public.santa_remove_wish(uuid, uuid),
   public.santa_admin_save_event(uuid, text, text, date),
+  public.santa_admin_set_access_code(uuid, text),
   public.santa_admin_add_member(uuid, text, text),
   public.santa_admin_remove_member(uuid, uuid),
   public.santa_admin_reset_pin(uuid, uuid),
